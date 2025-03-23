@@ -1,0 +1,53 @@
+#spring.application.name=User-Micro-Service
+#spring.data.mongodb.host=localhost
+#spring.data.mongodb.port=27017
+#spring.data.mongodb.database=userdatabase
+spring:
+  application:
+    name: User-Micro-Service
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: userdatabase
+
+spring.config.import: configserver:http://localhost:8086
+
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    fetch-registry: true
+#    register-with-eureka: true
+#    service-url:
+#      defaultZone: http://localhost:8081/eureka/
+
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+    health:
+      show-details: always
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      RatingHotelBreaker:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 6s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+
+
+
+

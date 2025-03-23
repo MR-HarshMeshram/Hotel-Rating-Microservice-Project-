@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: ConfigServer
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/MR-HarshMeshram/Micro-Service-Config
+          clone-on-start: true
+
+server:
+  port: 8086
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8081/eureka/
+

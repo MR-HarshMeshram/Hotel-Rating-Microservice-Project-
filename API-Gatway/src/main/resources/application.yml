@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: API-Gateway  # Corrected indentation and key placement
+  cloud:
+    gateway:
+      routes:
+        - id: USER-MICRO-SERVICE
+          uri: lb://USER-MICRO-SERVICE  # URL of the User Service
+          predicates:
+            - Path=/user/**
+        - id: RATING-MICRO-SERVICE
+          uri: lb://RATING-MICRO-SERVICE  # URL of the Rating Service
+          predicates:
+            - Path=/rating/**
+        - id: HOTEL-MICRO-SERVICE
+          uri: lb://HOTEL-MICRO-SERVICE  # URL of the Hotel Service
+          predicates:
+            - Path=/hotel/**
+
+server:
+  port: 8084  # Gateway running on port 8084
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8081/eureka/  # URL of the Eureka server
